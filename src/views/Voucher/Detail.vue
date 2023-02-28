@@ -85,7 +85,7 @@
                         <DetailRowNew :name="'Remaining Overall Quota'" :value="detail.rem_overall_quota? detail.rem_overall_quota : 0 "/>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
-                        <DetailRowNew :name="'Customer Type'" :value="detail.archetype.customer_type_id? detail.archetype.customer_type_id : '-'"/>
+                        <DetailRowNew :name="'Customer Type'" :value="detail.archetype.customer_type? detail.archetype.customer_type.description : '-'"/>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <DetailRowNew :name="'Quota per User'" :value="detail.user_quota? detail.user_quota : '-'"/>
