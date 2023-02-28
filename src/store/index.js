@@ -1,12 +1,12 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import application from "./modules/application";
+import voucher from "./modules/voucher";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    application
+    voucher
   }
 });
