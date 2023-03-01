@@ -534,7 +534,7 @@
                 </v-col>
             </v-row>
         </div>
-        <ConfirmationDialogNew :data-unq="`itemCategory-input-confirmDialog`" :sendData="confirm_data"/>
+        <ConfirmationDialogNew :data-unq="`voucher-input-confirmDialog`" :sendData="confirm_data"/>
     </v-container>
 </template>
 
