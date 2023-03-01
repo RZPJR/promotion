@@ -244,6 +244,16 @@
                 "fetchVoucherList",
                 "archiveVoucher",
             ]),
+            ...mapMutations([
+                'setSearchFilter',
+                'setStatusFilter',
+                'setVoucherTypeFilter',
+                'setRegionFilter',
+                'setCustomerFilter',
+                'setArchetypeFilter',
+                'setMembershipLevelFilter',
+                'setMembershipLapakFilter',
+            ]),
             // For Filter by Region
             voucherTypeSelected(d){
                 this.$store.commit("setVoucherTypeFilter", "")
