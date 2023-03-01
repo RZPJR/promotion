@@ -140,7 +140,7 @@ const mutations = {
 			end_time: null,
 			overall_quota: null,
 			user_quota: null,
-			min_order: null,
+			min_order: '',
 			disc_amount: null,
 			note: '',
 			voucher_item: [],
