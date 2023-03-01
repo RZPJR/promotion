@@ -152,7 +152,6 @@ const mutations = {
         return state;
     },
     resetDateCreate: function(state, payload) {
-        console.log("disiniii")
         state.voucher_create.date = {
             start_date : {
                 input : new Date(Date.now() + (3600 * 1000 * 7)).toISOString().substr(0, 10),
