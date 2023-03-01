@@ -138,12 +138,12 @@
             >
                 <template v-slot:item="props">
                     <tr style="height:48px">
-                        <td :data-unq="`voucher-value-redeemCode-${props.item.id}`">{{ props.item.redeem_code }}<br>
-                            <span class="text-black60" :data-unq="`voucher-value-name-${props.item.id}`">{{ props.item.name }}</span>
+                        <td :data-unq="`voucher-value-redeemCode-${props.index}`">{{ props.item.redeem_code }}<br>
+                            <span class="text-black60" :data-unq="`voucher-value-name-${props.index}`">{{ props.item.name }}</span>
                         </td>
-                        <td :data-unq="`voucher-value-type-${props.item.id}`">{{ props.item.type===1 ? 'Total Discount' : props.item.type === 2 ? 'Delivery Discount' : 'Extra Edenpoint'}}</td>
-                        <td :data-unq="`voucher-value-startEndTime-${props.item.id}`">{{ props.item.start_time | moment("DD/MM/YYYY HH:mm:ss") }} - {{ props.item.end_time | moment("DD/MM/YYYY HH:mm:ss") }}</td>
-                        <td :data-unq="`voucher-value-membership-${props.item.id}`">
+                        <td :data-unq="`voucher-value-type-${props.index}`">{{ props.item.type===1 ? 'Total Discount' : props.item.type === 2 ? 'Delivery Discount' : 'Extra Edenpoint'}}</td>
+                        <td :data-unq="`voucher-value-startEndTime-${props.index}`">{{ props.item.start_time | moment("DD/MM/YYYY HH:mm:ss") }} - {{ props.item.end_time | moment("DD/MM/YYYY HH:mm:ss") }}</td>
+                        <td :data-unq="`voucher-value-membership-${props.index}`">
                             <div v-if="props.item.membership_level != null">
                                 {{ props.item.membership_level.name }}<br>
                                 <span
@@ -155,17 +155,17 @@
                             </div>
                             <div v-else>-</div>
                         </td>
-                        <td :data-unq="`voucher-value-customer-${props.item.id}`">
+                        <td :data-unq="`voucher-value-customer-${props.index}`">
                             <div v-if="props.item.customer != null">
                                 {{ props.item.customer.code }} - {{ props.item.customer.name }}
                             </div>
                             <div v-else>-</div>
                         </td>
-                        <td :data-unq="`voucher-value-voucherAmount-${props.item.id}`" class="right">Rp. {{ formatPrice(props.item.disc_amount) }}</td>
-                        <td :data-unq="`voucher-value-overallQuota-${props.item.id}`" class="center">{{ props.item.overall_quota }}/{{ props.item.rem_overall_quota }}</td>
-                        <td :data-unq="`voucher-value-region-${props.item.id}`">{{ props.item.region.description }}</td>
-                        <td :data-unq="`voucher-value-archetype-${props.item.id}`">{{ props.item.archetype.description }}</td>
-                        <td :data-unq="`voucher-value-status-${props.item.id}`">
+                        <td :data-unq="`voucher-value-voucherAmount-${props.index}`" class="right">Rp. {{ formatPrice(props.item.disc_amount) }}</td>
+                        <td :data-unq="`voucher-value-overallQuota-${props.index}`" class="center">{{ props.item.overall_quota }}/{{ props.item.rem_overall_quota }}</td>
+                        <td :data-unq="`voucher-value-region-${props.index}`">{{ props.item.region.description }}</td>
+                        <td :data-unq="`voucher-value-archetype-${props.index}`">{{ props.item.archetype.description }}</td>
+                        <td :data-unq="`voucher-value-status-${props.index}`">
                             <div v-if="props.item.status === 1">
                                 <v-chip
                                     :color="statusMaster('active')"
@@ -177,7 +177,7 @@
                                 >Archived</v-chip>
                             </div>
                         </td>
-                        <td :data-unq="`voucher-button-actionMenu-${props.item.id}`">
+                        <td :data-unq="`voucher-button-actionMenu-${props.index}`">
                             <v-menu>
                                 <template v-slot:activator="{ on: menu }">
                                     <v-btn
