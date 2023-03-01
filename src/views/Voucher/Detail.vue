@@ -120,6 +120,28 @@
                 </v-row>
             </div>
         </div>
+        <div class="box-header-table" v-if="detail.voucher_items">
+            Items
+        </div>
+        <div class="box-body-table" v-if="detail.voucher_items">
+            <v-data-table
+                :headers="table_headers"
+                :items="detail.voucher_items"
+                :hide-default-footer="true"
+                :items-per-page="-1"
+                class="mx-6"
+                data-unq="voucher-table-listItems"
+            >
+                <template v-slot:item="props">
+                    <tr style="height:48px">
+                        <td>{{ props.index + 1 }}</td>
+                        <td>{{ props.item.item.code }} - {{ props.item.item.description }}</td>
+                        <td>{{ props.item.item.uom.name? props.item.item.uom.name : '-' }}</td>
+                        <td align="right">{{ formatPrice(props.item.min_qty_disc) }}</td>
+                    </tr>
+                </template>
+            </v-data-table>
+        </div>
         <ConfirmationDialogNew :data-unq="`voucher-input-confirmDialog`" :sendData="confirm_data"/>
         <AuditLogNew :data-unq="`voucher-input-auditLog`" :data="data_audit_log"/>
     </v-container>
@@ -132,6 +154,7 @@
         computed: {
             ...mapState({
                 detail: state => state.voucher.voucher_detail.data,
+                table_headers: state => state.voucher.voucher_detail.table_headers,
                 confirm_data: state => state.voucher.voucher_archive.confirm_data,
                 data_audit_log: state => state.voucher.voucher_detail.data_audit_log,
             })

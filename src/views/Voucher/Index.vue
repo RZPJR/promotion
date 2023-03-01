@@ -134,10 +134,11 @@
                 :items="list.data"
                 :loading="list.isLoading"
                 :items-per-page="10"
+                data-unq="voucher-table-listVoucher"
             >
                 <template v-slot:item="props">
                     <tr style="height:48px">
-                        <td>{{ props.item.code }}<br>
+                        <td>{{ props.item.redeem_code }}<br>
                             <span class="text-black60">{{ props.item.name }}</span>
                         </td>
                         <td>{{ props.item.type===1 ? 'Total Discount' : props.item.type === 2 ? 'Delivery Discount' : 'Extra Edenpoint'}}</td>
