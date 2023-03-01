@@ -176,6 +176,25 @@ const state = {
 				sortable: false
 			},
 		],
+        date : {
+            start_date : {
+                input : new Date(Date.now() + (3600 * 1000 * 7)).toISOString().substr(0, 10),
+                model : '',
+            },
+            start_time : {
+                input : '',
+                model : '',
+            },
+            finish_date : {
+                input : '',
+                model : '',
+            },
+            finish_time : {
+                input : '23:59',
+                model : '',
+            },
+            current_date: new Date(Date.now() + (3600 * 1000 * 7)).toISOString().substr(0, 10),
+        }
 	}
 };
 

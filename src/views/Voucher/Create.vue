@@ -114,7 +114,7 @@
                                         <v-menu
                                             :data-unq="`voucher-input-startDate`"
                                             ref="menu"
-                                            v-model="start_at_model"
+                                            v-model="date.start_date.model"
                                             :close-on-content-click="false"
                                             transition="scale-transition"
                                             offset-y
@@ -127,12 +127,12 @@
                                                         name="start_at"
                                                         prepend-inner-icon="date_range"
                                                         outlined
-                                                        v-model="start_at"
+                                                        v-model="date.start_date.input"
                                                         maxlength="10"
                                                         onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 45"
                                                         :error-messages="error.start_time"
                                                         clearable
-                                                        @click:clear="start_at = ''"
+                                                        @click:clear="date.start_date.input = ''"
                                                         dense
                                                     >
                                                         <template v-slot:label>
@@ -143,9 +143,9 @@
                                             </template>
                                             <v-date-picker
                                                 :data-unq="`banner-input-startAt`"
-                                                v-model="start_at"
-                                                @input="start_at_model = false"
-                                                :min="current_date"
+                                                v-model="date.start_date.input"
+                                                @input="date.start_date.model = false"
+                                                :min="date.current_date"
                                             ></v-date-picker>
                                         </v-menu>
                                     </v-col>
@@ -153,9 +153,9 @@
                                         <v-menu
                                             :data-unq="`voucher-input-startTime`"
                                             ref="menuTime"
-                                            v-model="start_time_model"
+                                            v-model="date.start_time.model"
                                             :close-on-content-click="false"
-                                            :return-value.sync="start_time"
+                                            :return-value.sync="date.start_time.input"
                                             transition="scale-transition"
                                             offset-y
                                             max-width="290px"
@@ -170,8 +170,8 @@
                                                     clearable
                                                     maxlength="5"
                                                     onkeypress="return event.charCode >= 48 && event.charCode <= 58"
-                                                    @click:clear="start_time = ''"
-                                                    v-model="start_time"
+                                                    @click:clear="date.start_time.input = ''"
+                                                    v-model="date.start_time.input"
                                                     :value="timeNow"
                                                     :error-messages="error.start_time"
                                                     dense
@@ -186,10 +186,10 @@
                                             <v-time-picker
                                                 format="24hr"
                                                 :min="checkTimeStart"
-                                                v-if="start_time_model"
-                                                v-model="start_time"
+                                                v-if="date.start_time.model"
+                                                v-model="date.start_time.input"
                                                 full-width
-                                                @click:minute="$refs.menuTime.save(start_time)"
+                                                @click:minute="$refs.menuTime.save(date.start_time.input)"
                                             ></v-time-picker>
                                         </v-menu>
                                     </v-col>
@@ -208,7 +208,7 @@
                                         <v-menu
                                             :data-unq="`voucher-input-endDate`"
                                             ref="menu"
-                                            v-model="finish_at_model"
+                                            v-model="date.finish_date.model"
                                             :close-on-content-click="false"
                                             transition="scale-transition"
                                             offset-y
@@ -221,11 +221,11 @@
                                                         name="finish_at"
                                                         prepend-inner-icon="date_range"
                                                         outlined
-                                                        v-model="finish_at"
+                                                        v-model="date.finish_date.input"
                                                         onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 45"
                                                         :error-messages="error.end_time"
                                                         clearable
-                                                        @click:clear="finish_at = ''"
+                                                        @click:clear="date.finish_date.input = ''"
                                                         dense
                                                     >
                                                         <template v-slot:label>
@@ -235,9 +235,9 @@
                                                 </div>
                                             </template>
                                             <v-date-picker
-                                                v-model="finish_at"
-                                                @input="finish_at_model = false"
-                                                :min="current_date"
+                                                v-model="date.finish_date.input"
+                                                @input="date.finish_date.model = false"
+                                                :min="date.current_date"
                                             ></v-date-picker>
                                         </v-menu>
                                     </v-col>
@@ -245,9 +245,9 @@
                                         <v-menu
                                             :data-unq="`voucher-input-endTime`"
                                             ref="menuEndTime"
-                                            v-model="end_time_model"
+                                            v-model="date.finish_time.model"
                                             :close-on-content-click="false"
-                                            :return-value.sync="end_time"
+                                            :return-value.sync="date.finish_time.input"
                                             transition="scale-transition"
                                             offset-y
                                             max-width="290px"
@@ -262,8 +262,8 @@
                                                     clearable
                                                     maxlength="5"
                                                     onkeypress="return event.charCode >= 48 && event.charCode <= 58"
-                                                    @click:clear="end_time = ''"
-                                                    v-model="end_time"
+                                                    @click:clear="date.finish_time.input = ''"
+                                                    v-model="date.finish_time.input"
                                                     :error-messages="error.end_time"
                                                     dense
                                                     v-bind="attrs"
@@ -277,10 +277,10 @@
                                             <v-time-picker
                                                 format="24hr"
                                                 :min="checkTimeEnd"
-                                                v-if="end_time_model"
-                                                v-model="end_time"
+                                                v-if="date.finish_time.model"
+                                                v-model="date.finish_time.input"
                                                 full-width
-                                                @click:minute="$refs.menuEndTime.save(end_time)"
+                                                @click:minute="$refs.menuEndTime.save(date.finish_time.input)"
                                             ></v-time-picker>
                                         </v-menu>
                                     </v-col>
@@ -325,7 +325,7 @@
                     <v-col cols="12" md="6" class="-mt24">
                         <v-text-field
                             name="min_order"
-                            v-model.number="form.min_order"
+                            v-model="form.min_order"
                             onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                             maxlength="12"
                             required
@@ -462,6 +462,7 @@
                             <SelectItemTable
                                 :name="`voucher_item_${props.index}`"
                                 @selected="itemSelected($event, props.index)"
+                                :error="errItem(props.index)"
                             ></SelectItemTable>
                         </td>
                         <td :data-unq="`voucher-value-uom-${props.index}`">{{ props.item.uom }}</td>
@@ -549,15 +550,6 @@
             return {
                 disabled_archetype: true,
                 disabled_checkpoint: true,
-                start_time_model: '',
-                start_time: '',
-                start_at_model: '',
-                start_at: new Date(Date.now() + (3600 * 1000 * 7)).toISOString().substr(0, 10),
-                current_date: new Date(Date.now() + (3600 * 1000 * 7)).toISOString().substr(0, 10),
-                finish_at_model: '',
-                finish_at: '',
-                end_time_model: '',
-                end_time: '23:59',
                 iconPlus: '',
                 iconMinus: '',
             }
@@ -565,6 +557,7 @@
         computed: {
             ...mapState({
                 form: state => state.voucher.voucher_create.form,
+                date: state => state.voucher.voucher_create.date,
                 table_headers: state => state.voucher.voucher_create.table_headers,
                 error: state => state.voucher.voucher_create.error,
                 confirm_data: state => state.voucher.voucher_create.confirm_data,
@@ -575,8 +568,8 @@
                 let h = (d.getHours() < 10 ? '0' : '') + d.getHours();
                 let m = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
                 const time = h + ':' + m
-                if (this.start_time === "") {
-                    return this.start_time = time
+                if (this.date.start_time.input === "") {
+                    return this.date.start_time.input = time
                 }
             },
             // Check for min time
@@ -585,7 +578,7 @@
                 let h = (d.getHours() < 10 ? '0' : '') + d.getHours();
                 let m = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
                 const time = h + ':' + m
-                if (this.current_date == this.start_at) {
+                if (this.date.current_date == this.date.start_date.input) {
                     return time
                 }
             },
@@ -595,13 +588,14 @@
                 let h = (d.getHours() < 10 ? '0' : '') + d.getHours();
                 let m = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
                 const time = h + ':' + m
-                if (this.current_date == this.finish_at) {
+                if (this.date.current_date == this.date.finish_date.input) {
                     return time
                 }
             },
         },
         mounted() {
             this.$store.commit('setVoucherCreate')
+            this.$store.commit('resetDateCreate')
             this.$store.commit('setErrorCreate', {})
             this.$store.commit('setErrorImageCreate', '')
             
@@ -623,25 +617,15 @@
             ...mapActions([
                 "createVoucher",
             ]),
-            ...mapMutations([
-                'setSearchFilter',
-                'setStatusFilter',
-                'setVoucherTypeFilter',
-                'setRegionFilter',
-                'setCustomerFilter',
-                'setArchetypeFilter',
-                'setMembershipLevelFilter',
-                'setMembershipLapakFilter',
-            ]),
             setCreateVoucher(){
                 this.$store.commit('setStartTimeCreate', null)
-                if (this.start_at && this.start_time) {
-                    let value = this.start_at + 'T' + this.start_time
+                if (this.date.start_date.input && this.date.start_time.input) {
+                    let value = this.date.start_date.input + 'T' + this.date.start_time.input
                     this.$store.commit('setStartTimeCreate', this.$moment(value).format('YYYY-MM-DDTHH:mm:ssZ'))
                 }
                 this.$store.commit('setEndTimeCreate', null)
-                if (this.finish_at && this.end_time) {
-                    let value = this.finish_at + 'T' + this.end_time
+                if (this.date.finish_date.input && this.date.finish_time.input) {
+                    let value = this.date.finish_date.input + 'T' + this.date.finish_time.input
                     this.$store.commit('setEndTimeCreate', this.$moment(value).format('YYYY-MM-DDTHH:mm:ssZ'))
                 }
                 
@@ -738,7 +722,7 @@
             // For Error Qty
             errQty(idx) {
                 for (var key in this.error) {
-                    if (key == 'qty' + idx) {
+                    if (key == 'min_qty_disc' + idx) {
                         return false
                     }
                 }
@@ -747,7 +731,15 @@
             // For Error Qty
             errQty2(idx) {
                 for (var key in this.error) {
-                    if (key == 'qty' + idx) {
+                    if (key == 'min_qty_disc' + idx) {
+                        return this.error[key]
+                    }
+                }
+            },
+            // For Error Item
+            errItem(idx) {
+                for (var key in this.error) {
+                    if (key == 'item_id' + idx) {
                         return this.error[key]
                     }
                 }
