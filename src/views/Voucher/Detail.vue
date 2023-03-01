@@ -136,7 +136,7 @@
                     <tr style="height:48px">
                         <td>{{ props.index + 1 }}</td>
                         <td>{{ props.item.item.code }} - {{ props.item.item.description }}</td>
-                        <td>{{ props.item.item.uom.name? props.item.item.uom.name : '-' }}</td>
+                        <td>{{ props.item.item.uom.description? props.item.item.uom.description : '-' }}</td>
                         <td align="right">{{ formatPrice(props.item.min_qty_disc) }}</td>
                     </tr>
                 </template>

@@ -229,14 +229,6 @@
             }),
         },
         created() {
-            this.$store.commit("setSearchFilter", "")
-            this.$store.commit("setStatusFilter", 1)
-            this.$store.commit("setVoucherTypeFilter", "")
-            this.$store.commit("setRegionFilter", "")
-            this.$store.commit("setCustomerFilter", "")
-            this.$store.commit("setArchetypeFilter", "")
-            this.$store.commit("setMembershipLevelFilter", "")
-            this.$store.commit("setMembershipLapakFilter", "")
             this.fetchVoucherList()
         },
         mounted() {
@@ -251,6 +243,16 @@
             ...mapActions([
                 "fetchVoucherList",
                 "archiveVoucher",
+            ]),
+            ...mapMutations([
+                'setSearchFilter',
+                'setStatusFilter',
+                'setVoucherTypeFilter',
+                'setRegionFilter',
+                'setCustomerFilter',
+                'setArchetypeFilter',
+                'setMembershipLevelFilter',
+                'setMembershipLapakFilter',
             ]),
             // For Filter by Region
             voucherTypeSelected(d){

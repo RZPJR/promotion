@@ -10,6 +10,7 @@ const actions = {
             const response = await http.get('/voucher',{params: {
                 page: 1,
                 per_page: 1000,
+                order_by: '-id',
                 search: state.voucher_list.filter.search,
                 status: status,
                 type: state.voucher_list.filter.type,
@@ -58,6 +59,20 @@ const actions = {
             console.log(error)
             commit("setPreloadVoucherDetail", false)
         }
+    },
+
+    // Voucher Create
+    createVoucher: async ({ commit, state, dispatch }, payload) => {
+        commit('setCreateVoucher', {});
+        commit('setCreateVoucher', {
+            model: true,
+            post: true,
+            title: "Create Voucher",
+            text: "Are you sure want to create this Voucher?",
+            urlApi: "/promotion/v1/voucher",
+            nextPage: "/promotion/voucher",
+            data: state.voucher_create.form
+        });
     },
 }
 

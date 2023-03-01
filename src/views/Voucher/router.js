@@ -24,21 +24,21 @@ export default [
             ],
         }
     },
-    // {
-    //     path: '/promotion/voucher/create',
-    //     name: 'VoucherCreate',
-    //     component: () => import("./Create"),
-    //     meta: {
-    //         title: 'Create Voucher',
-    //         breadcrumbs: [
-    //             {
-    //                 text: 'Voucher List',
-    //                 to: '/promotion/voucher'
-    //             },
-    //             {
-    //                 text: 'Create Voucher',
-    //             },
-    //         ],
-    //     }
-    // },
+    {
+        path: '/promotion/voucher/create',
+        name: 'VoucherCreate',
+        component: () => import("./Create"),
+        meta: {
+            title: 'Create Voucher',
+            breadcrumbs: [
+                {
+                    text: 'Voucher List',
+                    to: '/promotion/voucher'
+                },
+                {
+                    text: 'Create Voucher',
+                },
+            ],
+        }
+    },
 ]
