@@ -40,6 +40,19 @@ const mutations = {
         state.voucher_list.filter.membership_checkpoint_id = payload;
         return state;
     },
+    resetFilter: function(state, payload) {
+        state.voucher_list.filter = {
+            search: '',
+			status: 1,
+			type:'',
+			region_id: '',
+			customer_id: '',
+			archetype_id: '',
+			membership_level_id : '',
+			membership_checkpoint_id: '',
+        };
+        return state;
+    },
 
     // Archive Voucher
     setArchiveVoucher: function(state, payload) {

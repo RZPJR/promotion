@@ -123,7 +123,11 @@
                             color="#50ABA3"
                             class="no-caps bold white--text"
                             data-unq="voucher-button-create"
-                        >Create Voucher</v-btn>
+                        >
+                            <span class="text-white bold">
+                                Create Voucher
+                            </span>
+                        </v-btn>
                     </router-link>
                 </v-col>
             </v-row>
@@ -207,7 +211,7 @@
                 </template>
             </v-data-table>
         </div>
-        <ConfirmationDialogNew :data-unq="`itemCategory-input-confirmDialog`" :sendData="confirm_data"/>
+        <ConfirmationDialogNew :data-unq="`voucher-input-confirmDialog`" :sendData="confirm_data"/>
     </v-container>
 </template>
 
@@ -229,6 +233,7 @@
             }),
         },
         created() {
+            this.$store.commit("resetFilter")
             this.fetchVoucherList()
         },
         mounted() {
@@ -243,16 +248,6 @@
             ...mapActions([
                 "fetchVoucherList",
                 "archiveVoucher",
-            ]),
-            ...mapMutations([
-                'setSearchFilter',
-                'setStatusFilter',
-                'setVoucherTypeFilter',
-                'setRegionFilter',
-                'setCustomerFilter',
-                'setArchetypeFilter',
-                'setMembershipLevelFilter',
-                'setMembershipLapakFilter',
             ]),
             // For Filter by Region
             voucherTypeSelected(d){
