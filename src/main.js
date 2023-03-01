@@ -11,11 +11,13 @@ import 'vue-toast-notification/dist/theme-sugar.css';
 import '@mdi/font/css/materialdesignicons.css'
 import { Components } from "@vue-mf/global";
 import Vuetify from "vuetify/lib";
+import VueNumeric from 'vue-numeric'
 
 Vue.use(require('vue-moment'));
 Vue.use(VueToast);
 Vue.use(Vuetify);
 Vue.config.productionTip = false;
+Vue.use(VueNumeric)
 
 Vue.mixin({
   components: Components,
