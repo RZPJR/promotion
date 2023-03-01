@@ -633,21 +633,21 @@
             },
             // For Selected Voucher Type
             typeSelected(d) {
-                this.$store.commit('setVoucherTypeCreate', '')
+                this.$store.commit('setVoucherTypeCreate', 0)
                 if (d) {
                     this.$store.commit('setVoucherTypeCreate', d.value)
                 }
             },
             // For Selected Region
             regionSelected(d) {
-                this.$store.commit('setRegionCreate', '')
+                this.$store.commit('setRegionCreate', null)
                 if (d) {
                     this.$store.commit('setRegionCreate', d.id)
                 }
             },
             // For Selected Customer Type
             customerTypeSelected(d) {
-                this.$store.commit('setCustomerTypeCreate', '')
+                this.$store.commit('setCustomerTypeCreate', null)
                 if (d) {
                     this.$store.commit('setCustomerTypeCreate', d.id)
                     this.disabled_archetype = false
@@ -657,28 +657,28 @@
             },
             // For Selected Archetype
             archetypeSelected(d) {
-                this.$store.commit('setArchetypeCreate', '')
+                this.$store.commit('setArchetypeCreate', null)
                 if (d) {
                     this.$store.commit('setArchetypeCreate', d.id)
                 }
             },
             // For Selected Archetype
             customerSelected(d) {
-                this.$store.commit('setCustomerCreate', '')
+                this.$store.commit('setCustomerCreate', null)
                 if (d) {
                     this.$store.commit('setCustomerCreate', d.id)
                 }
             },
             // For Selected Archetype
             divisionSelected(d) {
-                this.$store.commit('setDivisionCreate', '')
+                this.$store.commit('setDivisionCreate', null)
                 if (d) {
                     this.$store.commit('setDivisionCreate', d.id)
                 }
             },
             // For Selected Membership Level
             membershipLevelSelected(d) {
-                this.$store.commit('setMembershipLevelCreate', '')
+                this.$store.commit('setMembershipLevelCreate', null)
                 if (d) {
                     this.$store.commit('setMembershipLevelCreate', d.id)
                     this.disabled_checkpoint = false
@@ -688,7 +688,7 @@
             },
             // For Selected Membership Checkpoint
             membershipCheckpointSelected(d) {
-                this.$store.commit('setMembershipCheckpointCreate', '')
+                this.$store.commit('setMembershipCheckpointCreate', null)
                 if (d) {
                     this.$store.commit('setMembershipCheckpointCreate', d.id)
                 }
