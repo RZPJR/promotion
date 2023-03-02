@@ -420,7 +420,7 @@
                             :minWidth="360"
                             :minHeight="180"
                             :maxSize="3000"
-                            :forImgName="'v'"
+                            :forImgName="form.name"
                             :type="'voucher'"
                             :extention="'jpeg'"
                             :accept="'image/jpeg,image/jpg'"
