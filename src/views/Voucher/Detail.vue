@@ -79,7 +79,7 @@
                         <DetailRowNew :name="'Overall Quota'" :value="detail.overall_quota? detail.overall_quota : '-'"/>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
-                        <DetailRowNew :name="'Area'" :value="detail.region.description? detail.region.description : '-'"/>
+                        <DetailRowNew :name="'Region'" :value="detail.region.description? detail.region.description : '-'"/>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <DetailRowNew :name="'Remaining Overall Quota'" :value="detail.rem_overall_quota? detail.rem_overall_quota : 0 "/>
