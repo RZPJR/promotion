@@ -80,6 +80,13 @@ const state = {
 			},
 		],
 		data: [],
+		data_bulky: [],
+		confirm_data: {},
+		error: {},
+		headersBulkError: [{
+			text: 'Error',
+			class: 'error--text'
+		}],
 	},
 
 	// Archive Voucher
