@@ -65,6 +65,10 @@ const mutations = {
         state.voucher_list.error = payload;
         return state;
     },
+    setResponseUploadBulkVoucher: function(state, payload) {
+        state.voucher_list.isSuccess = payload;
+        return state;
+    },
 
     // Archive Voucher
     setArchiveVoucher: function(state, payload) {
@@ -198,6 +202,27 @@ const mutations = {
         };
         return state;
     },
+    responseBulkTrue: function(state, payload) {
+        state.voucher_list.dialog_bulky = {
+			confirm_bulk_voucher: false,
+			clear: false,
+			error_message: '',
+		}
+    },
+    responseBulkFalse: function(state, payload) {
+        state.voucher_list.dialog_bulky = {
+			confirm_bulk_voucher: false,
+			modal_bulk_voucher: true,
+		}
+    },
+    deteleFileExcel: function(state, payload) {
+        state.voucher_list.data_bulky = []
+        state.voucher_list.dialog_bulky = {
+			error_message: '',
+			modal_bulk_voucher: true,
+		}
+        state.voucher_list.error = []
+    }
 };
 
 export default mutations;
