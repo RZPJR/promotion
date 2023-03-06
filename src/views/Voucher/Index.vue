@@ -138,6 +138,7 @@
                             @click="modal_bulk_voucher = true, clear=false, BulkVoucher=true"
                             class="no-caps bold"
                             v-privilege="'vou_blk_imp'"
+                            data-unq="voucher-button-bulk"
                         >
                             <span class="text-white">
                                 Bulk Voucher
@@ -244,6 +245,7 @@
                             <v-btn
                                 icon
                                 @click="modal_bulk_voucher=false, clear=true, error_message = ''"
+                                data-unq="voucher-button-close"
                             >
                                 <v-img :src='iconMinus' max-height="24px" max-width="24px"></v-img>
                             </v-btn>
@@ -278,6 +280,7 @@
                                         color="#50ABA3"
                                         class="only-btn white--text rounded-form mt10"
                                         @click="downloadTempBulkVoucher()"
+                                        data-unq="voucher-button-downloadTemplate"
                                     >Download Template</v-btn>
                                 </div>
                             </div>
@@ -304,6 +307,7 @@
                                     @onDelete="onDeleteBulkVoucher"
                                     :clear="clear"
                                     :error="error_message"
+                                    data-unq="voucher-button-uploadExcel"
                                 ></UploadExcel>
                             </div>
                             <v-card-actions class="mt20">
@@ -314,6 +318,7 @@
                                     color="#50ABA3"
                                     class="main-btn white--text"
                                     @click="uploadBulkVoucher()"
+                                    data-unq="voucher-button-upload"
                                 >
                                     Upload
                                 </v-btn>
@@ -329,7 +334,7 @@
                         >
                             <template v-slot:item="props">
                                 <tr style="height:30px">
-                                    <td>{{ props.item.item }}</td>
+                                    <td :data-unq="`voucher-value-errBulk-${props.index}`">{{ props.item.item }}</td>
                                 </tr>
                             </template>
                         </v-data-table>
@@ -494,6 +499,7 @@
                 this.$store.commit('setDataBulky', [])
                 this.disabled_upload = true
                 this.error_message = ""
+                this.err_bulk = []
             },
         },
         watch: {
