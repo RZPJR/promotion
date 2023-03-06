@@ -93,6 +93,7 @@ const state = {
 			clear: false,
 			error_message: '',
 			confirm_bulk_voucher: false,
+			disabled_upload: true,
 		}
 	},
 

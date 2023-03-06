@@ -140,7 +140,7 @@
                             v-privilege="'vou_blk_imp'"
                             data-unq="voucher-button-bulk"
                         >
-                            <span class="text-white">
+                            <span class="text-white bold">
                                 Bulk Voucher
                             </span>
                         </v-btn>
@@ -243,7 +243,7 @@
                         <v-col class="flex-align-end" cols="12" md="6">
                             <v-btn
                                 icon
-                                @click="list.dialog_bulky.modal_bulk_voucher=false, list.dialog_bulky.clear=true, list.dialog_bulky.error_message = ''"
+                                @click="list.dialog_bulky.modal_bulk_voucher=false, list.dialog_bulky.clear=true, list.dialog_bulky.error_message = '', list.error = [], list.dialog_bulky.disabled_upload=true"
                                 data-unq="voucher-button-close"
                             >
                                 <v-img :src='iconMinus' max-height="24px" max-width="24px"></v-img>
@@ -312,7 +312,7 @@
                             <v-card-actions class="mt20">
                                 <v-spacer></v-spacer>
                                 <v-btn
-                                    :disabled="disabled_upload"
+                                    :disabled="list.dialog_bulky.disabled_upload"
                                     depressed
                                     color="#50ABA3"
                                     class="main-btn white--text"
@@ -395,7 +395,6 @@
                 iconMinus: Minus,
                 img_download: Download,
                 img_worktime: Worktime,
-                disabled_upload: true,
             }
         },
         computed: {
@@ -506,11 +505,10 @@
                 });
                 this.$store.commit('setDataBulky', [])
                 this.$store.commit('setDataBulky', dataBulkVoucher)
-                this.disabled_upload = file.length == 0? true : false
+                this.list.dialog_bulky.disabled_upload = file.length == 0? true : false
             },
             // For reset when file bulk voucher remove
             onDeleteBulkVoucher(){
-                this.disabled_upload = true
                 this.$store.commit('deteleFileExcel')
             },
         },
