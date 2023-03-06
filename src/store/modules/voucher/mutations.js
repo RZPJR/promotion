@@ -204,22 +204,29 @@ const mutations = {
     },
     responseBulkTrue: function(state, payload) {
         state.voucher_list.dialog_bulky = {
-			confirm_bulk_voucher: false,
-			clear: false,
+            modal_bulk_voucher: false,
+			clear: true,
 			error_message: '',
+			confirm_bulk_voucher: false,
+            disabled_upload: true,
 		}
     },
     responseBulkFalse: function(state, payload) {
         state.voucher_list.dialog_bulky = {
-			confirm_bulk_voucher: false,
 			modal_bulk_voucher: true,
+			clear: false,
+			error_message: '',
+			confirm_bulk_voucher: false,
+            disabled_upload: false,
 		}
     },
     deteleFileExcel: function(state, payload) {
         state.voucher_list.data_bulky = []
         state.voucher_list.dialog_bulky = {
+			confirm_bulk_voucher: false,
 			error_message: '',
 			modal_bulk_voucher: true,
+            disabled_upload: true,
 		}
         state.voucher_list.error = []
     }
