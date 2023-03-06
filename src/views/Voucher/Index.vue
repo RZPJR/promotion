@@ -135,7 +135,7 @@
                         <v-btn
                             depressed
                             color="#50ABA3"
-                            @click="modal_bulk_voucher = true, clear=false, BulkVoucher=true"
+                            @click="list.dialog_bulky.modal_bulk_voucher=true, list.dialog_bulky.clear=false, BulkVoucher=true"
                             class="no-caps bold"
                             v-privilege="'vou_blk_imp'"
                             data-unq="voucher-button-bulk"
@@ -229,13 +229,12 @@
         </div>
         <!-- Dialog Bulk Voucher-->
         <v-dialog
-            v-model="modal_bulk_voucher"
+            v-model="list.dialog_bulky.modal_bulk_voucher"
             persistent
             max-width="1200px"
             scrollable
         >
             <v-card class="OpenSans">
-                <!-- <LoadingBar :value="overlay"/> -->
                 <v-card-title>
                     <v-row>
                         <v-col class="text-title-modal" cols="12" md="6">
@@ -244,7 +243,7 @@
                         <v-col class="flex-align-end" cols="12" md="6">
                             <v-btn
                                 icon
-                                @click="modal_bulk_voucher=false, clear=true, error_message = ''"
+                                @click="list.dialog_bulky.modal_bulk_voucher=false, list.dialog_bulky.clear=true, list.dialog_bulky.error_message = ''"
                                 data-unq="voucher-button-close"
                             >
                                 <v-img :src='iconMinus' max-height="24px" max-width="24px"></v-img>
@@ -305,8 +304,8 @@
                                 <UploadExcel
                                     @onSelect="onSelectBulkVoucher"
                                     @onDelete="onDeleteBulkVoucher"
-                                    :clear="clear"
-                                    :error="error_message"
+                                    :clear="list.dialog_bulky.clear"
+                                    :error="list.dialog_bulky.error_message"
                                     data-unq="voucher-button-uploadExcel"
                                 ></UploadExcel>
                             </div>
@@ -317,7 +316,7 @@
                                     depressed
                                     color="#50ABA3"
                                     class="main-btn white--text"
-                                    @click="uploadBulkVoucher()"
+                                    @click="list.dialog_bulky.confirm_bulk_voucher=true, list.dialog_bulky.modal_bulk_voucher=false"
                                     data-unq="voucher-button-upload"
                                 >
                                     Upload
@@ -325,11 +324,11 @@
                             </v-card-actions>
                         </v-col>
                     </v-row>
-                    <div :hidden="err_bulk.length > 0? false : true" class="box-modal-table ma10">
+                    <div :hidden="error.length > 0? false : true" class="box-modal-table ma10">
                         <v-spacer></v-spacer>
                         <v-data-table
                             :headers="list.headersBulkError"
-                            :items="transformedToList"
+                            :items="error"
                             :items-per-page="5"
                         >
                             <template v-slot:item="props">
@@ -340,6 +339,39 @@
                         </v-data-table>
                     </div>
                 </v-card-text>
+            </v-card>
+        </v-dialog>
+        <!-- Dialog Bulk Voucher - Confirmation-->
+        <v-dialog
+            v-model="list.dialog_bulky.confirm_bulk_voucher"
+            persistent
+            max-width="470px"
+        >
+            <v-card class="OpenSans">
+                <v-card-title>
+                    <span class="text-title-modal">Create Bulk Voucher</span>
+                </v-card-title>
+                <v-card-text>
+                    <span class="fs16 mt-1">Are you sure to create this bulk voucher?</span>
+                </v-card-text>
+                <v-card-actions class="pb-4">
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        @click="list.dialog_bulky.confirm_bulk_voucher=false, list.dialog_bulky.modal_bulk_voucher=true"
+                        depressed
+                        outlined
+                        color="#EBEBEB"
+                        class="main-btn"
+                    >
+                        <span class="text-black80">No</span>
+                    </v-btn>
+                    <v-btn
+                        class="main-btn white--text"
+                        depressed
+                        color="#50ABA3"
+                        @click="uploadBulkVoucher(), list.dialog_bulky.modal_bulk_voucher=false"
+                    >Yes</v-btn>
+                </v-card-actions>
             </v-card>
         </v-dialog>
         <ConfirmationDialogNew :data-unq="`voucher-input-confirmDialog`" :sendData="confirm_data"/>
@@ -360,14 +392,10 @@
             return {
                 show_filter : false,
                 disabled_checkpoint: true,
-                modal_bulk_voucher: false,
-                clear: false,
-                error_message: '',
                 iconMinus: Minus,
                 img_download: Download,
                 img_worktime: Worktime,
                 disabled_upload: true,
-                err_bulk: []
             }
         },
         computed: {
@@ -377,14 +405,6 @@
                 confirm_data_bulky: state => state.voucher.voucher_list.confirm_data,
                 error: state => state.voucher.voucher_list.error
             }),
-            //Transformed row bulk error to list
-            transformedToList() {
-                let rowBulkError = this.error.error_callback != null? this.error.error_callback.slice(0, -1).split('|') : [];
-                rowBulkError.forEach(e => {
-                    this.err_bulk.push({item: e})
-                });
-                return this.err_bulk;
-            }
         },
         created() {
             this.$store.commit("resetFilter")
@@ -395,12 +415,6 @@
             this.$root.$on('event_success', function(res){
                 if (res) {
                     self.fetchVoucherList()
-                }
-            });
-            this.$root.$on('event_error', function (err) {
-                self.$store.commit('setErrorBulky', {})
-                if (err) {
-                    self.$store.commit('setErrorBulky', err)
                 }
             });
         },
@@ -467,7 +481,7 @@
             },
             // For listing bulk voucher
             onSelectBulkVoucher(file){
-                this.error_message = file.length == 0 ? "No rows found" : ""
+                this.list.dialog_bulky.error_message = file.length == 0 ? "No rows found" : ""
                 let dataBulkVoucher = []
                 file.forEach((item) => {
                     let value = {};
@@ -496,10 +510,8 @@
             },
             // For reset when file bulk voucher remove
             onDeleteBulkVoucher(){
-                this.$store.commit('setDataBulky', [])
                 this.disabled_upload = true
-                this.error_message = ""
-                this.err_bulk = []
+                this.$store.commit('deteleFileExcel')
             },
         },
         watch: {

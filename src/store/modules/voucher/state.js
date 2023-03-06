@@ -82,11 +82,18 @@ const state = {
 		data: [],
 		data_bulky: [],
 		confirm_data: {},
-		error: {},
+		error: [],
 		headersBulkError: [{
 			text: 'Error',
 			class: 'error--text'
 		}],
+		// isSuccess: false,
+		dialog_bulky:{
+			modal_bulk_voucher: false,
+			clear: false,
+			error_message: '',
+			confirm_bulk_voucher: false,
+		}
 	},
 
 	// Archive Voucher

@@ -1,4 +1,5 @@
 import http from "../../../services/http";
+import Vue from 'vue'
 
 const actions = {
     // Readlist Voucher
@@ -77,17 +78,29 @@ const actions = {
 
     // Upload Bulky Voucher
     uploadBulkVoucher: async ({ commit, state, dispatch }, payload) => {
-        commit('setConfirmBulkyVoucher', {});
-        commit('setConfirmBulkyVoucher', {
-            model: true,
-            status: true,
-            post: true,
-            statusMsg: "Data has been updated successfully",
-            title: "Create Bulk Voucher",
-            text: "Are you sure to create this bulk voucher?",
-            urlApi: '/promotion/v1/voucher/bulky',
-            data: {data: state.voucher_list.data_bulky}
-        });
+        let data = {
+            data : state.voucher_list.data_bulky
+        }
+        await http.post("/voucher/bulky", data).then(response => {
+            Vue.$toast.open({
+                position: 'top-right',
+                message: 'Data has been updated successfully',
+                type: 'success',
+            });
+        }).then(() => {
+            commit("setResponseUploadBulkVoucher", true)
+            commit("responseBulkTrue")
+            dispatch("fetchVoucherList")
+        }).catch(e => {
+            commit("setErrorBulky", [])
+            let rowBulkError = e.errors.error_callback != null? e.errors.error_callback.slice(0, -1).split('|') : [];
+            let err = []
+            rowBulkError.forEach(e => {
+                err.push({item: e})
+            });
+            commit("setErrorBulky", err)
+            commit("responseBulkFalse")
+        })
     },
 }
 
