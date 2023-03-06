@@ -53,6 +53,18 @@ const mutations = {
         };
         return state;
     },
+    setDataBulky: function(state, payload) {
+        state.voucher_list.data_bulky = payload;
+        return state;
+    },
+    setConfirmBulkyVoucher: function(state, payload) {
+        state.voucher_list.confirm_data = payload;
+        return state;
+    },
+    setErrorBulky: function(state, payload) {
+        state.voucher_list.error = payload;
+        return state;
+    },
 
     // Archive Voucher
     setArchiveVoucher: function(state, payload) {

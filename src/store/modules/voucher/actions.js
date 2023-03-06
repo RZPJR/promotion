@@ -74,6 +74,21 @@ const actions = {
             data: state.voucher_create.form
         });
     },
+
+    // Upload Bulky Voucher
+    uploadBulkVoucher: async ({ commit, state, dispatch }, payload) => {
+        commit('setConfirmBulkyVoucher', {});
+        commit('setConfirmBulkyVoucher', {
+            model: true,
+            status: true,
+            post: true,
+            statusMsg: "Data has been updated successfully",
+            title: "Create Bulk Voucher",
+            text: "Are you sure to create this bulk voucher?",
+            urlApi: '/promotion/v1/voucher/bulky',
+            data: {data: state.voucher_list.data_bulky}
+        });
+    },
 }
 
 export default actions;

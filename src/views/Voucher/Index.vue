@@ -115,22 +115,38 @@
             </v-row>
         </div>
         <div class="box-title">
-            <v-row >
-                <v-col class="flex-align-end">
-                    <router-link :to="{ name: 'VoucherCreate' }" class="routerLink" v-privilege="'vou_crt'">
+            <div class="flex-align-end">
+                <v-row>
+                    <v-col>
+                        <router-link :to="{ name: 'VoucherCreate' }" class="routerLink" v-privilege="'vou_crt'">
+                            <v-btn
+                                depressed
+                                color="#50ABA3"
+                                class="no-caps bold white--text"
+                                data-unq="voucher-button-create"
+                            >
+                                <span class="text-white bold">
+                                    Create Voucher
+                                </span>
+                            </v-btn>
+                        </router-link>
+                    </v-col>
+                    <v-col>
                         <v-btn
                             depressed
                             color="#50ABA3"
-                            class="no-caps bold white--text"
-                            data-unq="voucher-button-create"
+                            @click="modal_bulk_voucher = true, clear=false, BulkVoucher=true"
+                            class="no-caps bold"
+                            v-privilege="'vou_blk_imp'"
+                            data-unq="voucher-button-bulk"
                         >
-                            <span class="text-white bold">
-                                Create Voucher
+                            <span class="text-white">
+                                Bulk Voucher
                             </span>
                         </v-btn>
-                    </router-link>
-                </v-col>
-            </v-row>
+                    </v-col>
+                </v-row>
+            </div>
         </div>
         <div class="box-body-table">
             <v-data-table
@@ -211,26 +227,164 @@
                 </template>
             </v-data-table>
         </div>
+        <!-- Dialog Bulk Voucher-->
+        <v-dialog
+            v-model="modal_bulk_voucher"
+            persistent
+            max-width="1200px"
+            scrollable
+        >
+            <v-card class="OpenSans">
+                <!-- <LoadingBar :value="overlay"/> -->
+                <v-card-title>
+                    <v-row>
+                        <v-col class="text-title-modal" cols="12" md="6">
+                            Bulk Voucher
+                        </v-col>
+                        <v-col class="flex-align-end" cols="12" md="6">
+                            <v-btn
+                                icon
+                                @click="modal_bulk_voucher=false, clear=true, error_message = ''"
+                                data-unq="voucher-button-close"
+                            >
+                                <v-img :src='iconMinus' max-height="24px" max-width="24px"></v-img>
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </v-card-title>
+                <div class="hr-title-modal"/>
+                <v-card-text class="mt5">
+                    <v-alert
+                        color="#2A89A7"
+                        dark
+                        outlined
+                    >
+                        <v-icon color="#2A89A7" class="-mt3">mdi-alert-circle-outline</v-icon> 
+                        Please follow the step to upload Bulk Voucher
+                    </v-alert>
+                    <v-row class="mt20 mb10">
+                        <v-col style="border-right: 1px dashed lightgrey;" class="pa-8">
+                            <div>
+                                Step 1. Download Template
+                            </div>
+                            <div class="text-black60">
+                                Download template to create your bulk voucher
+                            </div>
+                            <div class="mt-3 bg-black10" style="border: 2px dashed #AAAAAA; min-height:220px; text-align: center;">
+                                <div>
+                                    <img width="60" class="mt50 mb8" :src='img_download' alt="">
+                                </div>
+                                <div class="mt-4">
+                                    <v-btn
+                                        depressed
+                                        color="#50ABA3"
+                                        class="only-btn white--text rounded-form mt10"
+                                        @click="downloadTempBulkVoucher()"
+                                        data-unq="voucher-button-downloadTemplate"
+                                    >Download Template</v-btn>
+                                </div>
+                            </div>
+                        </v-col>
+                        <v-col style="border-right: 1px dashed lightgrey;" class="pa-8">
+                            <div>
+                                Step 2. Update Template
+                            </div>
+                            <div class="text-black60">
+                                Update with spreadsheet application
+                            </div>
+                            <v-img width="250px" class="mt-2" :src='img_worktime' alt="" />
+                        </v-col>
+                        <v-col class="pa-8">
+                            <div>
+                                Step 3. Upload File<span class="text-red">*</span>
+                            </div>
+                            <div class="text-black60">
+                                Voucher will be create on list after upload
+                            </div>
+                            <div class="mt10">
+                                <UploadExcel
+                                    @onSelect="onSelectBulkVoucher"
+                                    @onDelete="onDeleteBulkVoucher"
+                                    :clear="clear"
+                                    :error="error_message"
+                                    data-unq="voucher-button-uploadExcel"
+                                ></UploadExcel>
+                            </div>
+                            <v-card-actions class="mt20">
+                                <v-spacer></v-spacer>
+                                <v-btn
+                                    :disabled="disabled_upload"
+                                    depressed
+                                    color="#50ABA3"
+                                    class="main-btn white--text"
+                                    @click="uploadBulkVoucher()"
+                                    data-unq="voucher-button-upload"
+                                >
+                                    Upload
+                                </v-btn>
+                            </v-card-actions>
+                        </v-col>
+                    </v-row>
+                    <div :hidden="err_bulk.length > 0? false : true" class="box-modal-table ma10">
+                        <v-spacer></v-spacer>
+                        <v-data-table
+                            :headers="list.headersBulkError"
+                            :items="transformedToList"
+                            :items-per-page="5"
+                        >
+                            <template v-slot:item="props">
+                                <tr style="height:30px">
+                                    <td :data-unq="`voucher-value-errBulk-${props.index}`">{{ props.item.item }}</td>
+                                </tr>
+                            </template>
+                        </v-data-table>
+                    </div>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
         <ConfirmationDialogNew :data-unq="`voucher-input-confirmDialog`" :sendData="confirm_data"/>
+        <ConfirmationDialogNew :data-unq="`voucher-input-confirmDialog`" :sendData="confirm_data_bulky"/>
     </v-container>
 </template>
 
 <script>
+    import { Download } from "@vue-mf/global";
+    import { Worktime } from "@vue-mf/global";
+    import { Minus } from "@vue-mf/global";
     import { mapState, mapActions, mapMutations } from "vuex";
 
     export default {
         name: "VoucherList",
+        components: { Download, Worktime, Minus },
         data() {
             return {
                 show_filter : false,
                 disabled_checkpoint: true,
+                modal_bulk_voucher: false,
+                clear: false,
+                error_message: '',
+                iconMinus: Minus,
+                img_download: Download,
+                img_worktime: Worktime,
+                disabled_upload: true,
+                err_bulk: []
             }
         },
         computed: {
             ...mapState({
                 list: state => state.voucher.voucher_list,
                 confirm_data: state => state.voucher.voucher_archive.confirm_data,
+                confirm_data_bulky: state => state.voucher.voucher_list.confirm_data,
+                error: state => state.voucher.voucher_list.error
             }),
+            //Transformed row bulk error to list
+            transformedToList() {
+                let rowBulkError = this.error.error_callback != null? this.error.error_callback.slice(0, -1).split('|') : [];
+                rowBulkError.forEach(e => {
+                    this.err_bulk.push({item: e})
+                });
+                return this.err_bulk;
+            }
         },
         created() {
             this.$store.commit("resetFilter")
@@ -243,11 +397,18 @@
                     self.fetchVoucherList()
                 }
             });
+            this.$root.$on('event_error', function (err) {
+                self.$store.commit('setErrorBulky', {})
+                if (err) {
+                    self.$store.commit('setErrorBulky', err)
+                }
+            });
         },
         methods: {
             ...mapActions([
                 "fetchVoucherList",
                 "archiveVoucher",
+                "uploadBulkVoucher",
             ]),
             // For Filter by Region
             voucherTypeSelected(d){
@@ -299,6 +460,46 @@
                     this.$store.commit("setMembershipLapakFilter", d.id)
                 }
                 this.fetchVoucherList()
+            },
+            // For download excel template bulk voucher
+            downloadTempBulkVoucher() {
+                window.location.href = process.env.VUE_APP_BULK_VOUCHER
+            },
+            // For listing bulk voucher
+            onSelectBulkVoucher(file){
+                this.error_message = file.length == 0 ? "No rows found" : ""
+                let dataBulkVoucher = []
+                file.forEach((item) => {
+                    let value = {};
+                    value.region_code = item.region_code;
+                    value.archetype_code = item.archetype_code;
+                    value.customer_code = item.customer_code;
+                    value.division_code = item.division_code;
+                    value.redeem_code = item.redeem_code;
+                    value.voucher_name = item.voucher_name;
+                    value.voucher_type = parseInt(item.voucher_type);
+                    value.start_time = this.$moment(item.start_timestamp).format('YYYY-MM-DD HH:mm:ss');
+                    value.end_time = this.$moment(item.end_timestamp).format('YYYY-MM-DD HH:mm:ss');
+                    value.overall_quota = parseInt(item.overall_quota);
+                    value.user_quota = parseInt(item.user_quota);
+                    value.disc_amount = parseInt(item.voucher_amount);
+                    value.min_order = parseInt(item.min_order);
+                    value.note = item.note;
+                    value.membership_level = parseInt(item.membership_level) ;
+                    value.membership_checkpoint = parseInt(item.membership_lapak);
+
+                    dataBulkVoucher.push(value)
+                });
+                this.$store.commit('setDataBulky', [])
+                this.$store.commit('setDataBulky', dataBulkVoucher)
+                this.disabled_upload = file.length == 0? true : false
+            },
+            // For reset when file bulk voucher remove
+            onDeleteBulkVoucher(){
+                this.$store.commit('setDataBulky', [])
+                this.disabled_upload = true
+                this.error_message = ""
+                this.err_bulk = []
             },
         },
         watch: {
