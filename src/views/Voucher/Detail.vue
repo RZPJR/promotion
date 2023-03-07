@@ -2,7 +2,7 @@
     <v-container fill-height class="main-container">
         <div class="box-start">
             <v-row class="mb24">
-                <v-col>
+                <v-col v-if="detail.image_url">
                     <v-img
                         class="rounded-form"
                         height="180"
