@@ -484,12 +484,12 @@
                 let dataBulkVoucher = []
                 file.forEach((item) => {
                     let value = {};
-                    value.region_code = item.region_code;
-                    value.archetype_code = item.archetype_code;
-                    value.customer_code = item.customer_code;
-                    value.division_code = item.division_code;
-                    value.redeem_code = item.redeem_code;
-                    value.voucher_name = item.voucher_name;
+                    value.region_code = String(item.region_code);
+                    value.archetype_code = String(item.archetype_code);
+                    value.customer_code = String(item.customer_code);
+                    value.division_code = String(item.division_code);
+                    value.redeem_code = String(item.redeem_code);
+                    value.voucher_name = String(item.voucher_name);
                     value.voucher_type = parseInt(item.voucher_type);
                     value.start_time = this.$moment(item.start_timestamp).format('YYYY-MM-DD HH:mm:ss');
                     value.end_time = this.$moment(item.end_timestamp).format('YYYY-MM-DD HH:mm:ss');
@@ -497,7 +497,7 @@
                     value.user_quota = parseInt(item.user_quota);
                     value.disc_amount = parseInt(item.voucher_amount);
                     value.min_order = parseInt(item.min_order);
-                    value.note = item.note;
+                    value.note = String(item.note);
                     value.membership_level = parseInt(item.membership_level) ;
                     value.membership_checkpoint = parseInt(item.membership_lapak);
 

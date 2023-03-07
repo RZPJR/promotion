@@ -139,7 +139,6 @@ const state = {
 
 	// Create Voucher
 	voucher_create: {
-		confirm_data: {},
 		error: {},
 		form:{
 			redeem_code: '',

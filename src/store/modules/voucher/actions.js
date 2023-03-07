@@ -62,20 +62,6 @@ const actions = {
         }
     },
 
-    // Voucher Create
-    createVoucher: async ({ commit, state, dispatch }, payload) => {
-        commit('setCreateVoucher', {});
-        commit('setCreateVoucher', {
-            model: true,
-            post: true,
-            title: "Create Voucher",
-            text: "Are you sure want to create this Voucher?",
-            urlApi: "/promotion/v1/voucher",
-            nextPage: "/promotion/voucher",
-            data: state.voucher_create.form
-        });
-    },
-
     // Upload Bulky Voucher
     uploadBulkVoucher: async ({ commit, state, dispatch }, payload) => {
         let data = {
