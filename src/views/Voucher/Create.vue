@@ -552,6 +552,7 @@
                 disabled_checkpoint: true,
                 iconPlus: '',
                 iconMinus: '',
+                confirm_data: {},
             }
         },
         computed: {
@@ -560,7 +561,6 @@
                 date: state => state.voucher.voucher_create.date,
                 table_headers: state => state.voucher.voucher_create.table_headers,
                 error: state => state.voucher.voucher_create.error,
-                confirm_data: state => state.voucher.voucher_create.confirm_data,
             }),
             // Check and save current time
             timeNow() {
@@ -614,9 +614,6 @@
             });
         },
         methods: {
-            ...mapActions([
-                "createVoucher",
-            ]),
             setCreateVoucher(){
                 this.$store.commit('setStartTimeCreate', null)
                 if (this.date.start_date.input && this.date.start_time.input) {
@@ -628,8 +625,15 @@
                     let value = this.date.finish_date.input + 'T' + this.date.finish_time.input
                     this.$store.commit('setEndTimeCreate', this.$moment(value).format('YYYY-MM-DDTHH:mm:ssZ'))
                 }
-                
-                this.createVoucher()
+                this.confirm_data = {
+                    model: true,
+                    post: true,
+                    title: "Create Voucher",
+                    text: "Are you sure want to create this Voucher?",
+                    urlApi: "/promotion/v1/voucher",
+                    nextPage: "/promotion/voucher",
+                    data: this.form
+                }
             },
             // For Selected Voucher Type
             typeSelected(d) {

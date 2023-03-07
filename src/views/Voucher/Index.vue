@@ -488,7 +488,7 @@
                     value.archetype_code = item.archetype_code;
                     value.customer_code = item.customer_code;
                     value.division_code = item.division_code;
-                    value.redeem_code = item.redeem_code;
+                    value.redeem_code = String(item.redeem_code);
                     value.voucher_name = item.voucher_name;
                     value.voucher_type = parseInt(item.voucher_type);
                     value.start_time = this.$moment(item.start_timestamp).format('YYYY-MM-DD HH:mm:ss');
