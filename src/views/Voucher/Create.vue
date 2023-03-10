@@ -463,6 +463,7 @@
                                 :name="`voucher_item_${props.index}`"
                                 @selected="itemSelected($event, props.index)"
                                 :error="errItem(props.index)"
+                                :product="props.item.product"
                             ></SelectItemTable>
                         </td>
                         <td :data-unq="`voucher-value-uom-${props.index}`">{{ props.item.uom }}</td>
@@ -703,7 +704,8 @@
                     this.$store.commit('addItemCreate', {
                         idx: idx,
                         item_id: d.id,
-                        uom: d.uom.name
+                        uom: d.uom.name,
+                        product: d
                     })
                 }
             },
@@ -716,6 +718,7 @@
                         item_id: null,
                         uom: '',
                         min_qty_disc: null,
+                        product: null
                     }
                 )
             },
