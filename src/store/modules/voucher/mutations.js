@@ -136,7 +136,7 @@ const mutations = {
         return state;
     },
     addItemCreate: function(state, payload) {
-        state.voucher_create.form.voucher_item.splice(payload.idx, 1, {item_id: payload.item_id, uom: payload.uom});
+        state.voucher_create.form.voucher_item.splice(payload.idx, 1, {item_id: payload.item_id, uom: payload.uom, product: payload.product});
         return state;
     },
     removeItemCreate: function(state, payload) {
