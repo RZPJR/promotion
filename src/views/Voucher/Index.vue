@@ -153,7 +153,11 @@
                 :headers="list.table_headers"
                 :items="list.data"
                 :loading="list.isLoading"
-                :items-per-page="10"
+                :items-per-page="pagination.rows_per_page"
+                :server-items-length="Math.ceil(pagination.total_items/pagination.rows_per_page)"
+                @update:items-per-page="getItemPerPage"
+                @update:page="getPagination"
+                :footer-props="{'items-per-page-options':[10,15,20,25]}"
                 data-unq="voucher-table-listVoucher"
             >
                 <template v-slot:item="props">
@@ -224,6 +228,9 @@
                             </v-menu>
                         </td>
                     </tr>
+                </template>
+                <template v-slot:[`footer.page-text`]="props">
+                    {{ props.pageStart }} - {{ props.pageStop < 10 ? pagination.total_items : props.pageStop }} of {{ pagination.total_items }}
                 </template>
             </v-data-table>
         </div>
@@ -402,7 +409,8 @@
                 list: state => state.voucher.voucher_list,
                 confirm_data: state => state.voucher.voucher_archive.confirm_data,
                 confirm_data_bulky: state => state.voucher.voucher_list.confirm_data,
-                error: state => state.voucher.voucher_list.error
+                error: state => state.voucher.voucher_list.error,
+                pagination: state => state.voucher.voucher_list.pagination,
             }),
         },
         created() {
@@ -510,6 +518,22 @@
             // For reset when file bulk voucher remove
             onDeleteBulkVoucher(){
                 this.$store.commit('deteleFileExcel')
+            },
+            // Count all data for paggination
+            getItemPerPage(val) {
+                this.$store.commit('setPagination', {
+                    ...this.pagination,
+                    rows_per_page: val,
+                })
+                this.fetchVoucherList()
+            },
+            // For paggination
+            getPagination(val) {
+                this.$store.commit('setPagination', {
+                    ...this.pagination,
+                    page: val,
+                })
+                this.fetchVoucherList()
             },
         },
         watch: {

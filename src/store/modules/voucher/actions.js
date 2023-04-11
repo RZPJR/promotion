@@ -8,9 +8,10 @@ const actions = {
         commit("setVoucherList", [])
         try {
             let status = state.voucher_list.filter.status === 999 ? '' : state.voucher_list.filter.status
+            let pagination = state.voucher_list.pagination
             const response = await http.get('/voucher',{params: {
-                page: 1,
-                per_page: 100,
+                page: pagination.page,
+                per_page : pagination.rows_per_page,
                 order_by: '-id',
                 search: state.voucher_list.filter.search,
                 status: status,
@@ -24,6 +25,10 @@ const actions = {
             }});
             if(response.data.data && response.data.data !== null){
                 commit("setVoucherList", response.data.data)
+                commit('setPagination', {
+                    ...state.voucher_list.pagination,
+                    total_items: response.data.total !== null ? response.data.total : 0
+                })
             }
             commit("setPreloadVoucherList", false)
         } catch (error) {
