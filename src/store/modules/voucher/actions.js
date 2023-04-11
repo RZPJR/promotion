@@ -10,7 +10,7 @@ const actions = {
             let status = state.voucher_list.filter.status === 999 ? '' : state.voucher_list.filter.status
             const response = await http.get('/voucher',{params: {
                 page: 1,
-                per_page: 1000,
+                per_page: 100,
                 order_by: '-id',
                 search: state.voucher_list.filter.search,
                 status: status,
