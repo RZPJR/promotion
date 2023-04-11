@@ -94,7 +94,13 @@ const state = {
 			error_message: '',
 			confirm_bulk_voucher: false,
 			disabled_upload: true,
-		}
+		},
+        pagination: {
+            page: 1,
+            rows_per_page: 10,
+            total_items: 0,
+            last_page: 0,
+        },
 	},
 
 	// Archive Voucher
