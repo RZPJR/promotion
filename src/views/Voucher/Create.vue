@@ -70,6 +70,7 @@
                                 label="Select All Region"
                                 v-model="check_box.region"
                                 @click="checkBoxArea(check_box.region)"
+                                :data-unq="`voucher-checkbox-region"
                             ></v-checkbox>
                         </div>
                     </v-col>
@@ -88,6 +89,7 @@
                                 label="Select All Customer Type"
                                 v-model="check_box.customer_type"
                                 @click="checkBoxCustomerType(check_box.customer_type)"
+                                :data-unq="`voucher-checkbox-customerType`"
                             ></v-checkbox>
                         </div>
                     </v-col>
@@ -108,6 +110,7 @@
                                 label="Select All Archetype"
                                 v-model="check_box.archetype"
                                 @click="checkBoxArchetype(check_box.archetype)"
+                                :data-unq="`voucher-checkbox-archetype`"
                             ></v-checkbox>
                         </div>
                     </v-col>
