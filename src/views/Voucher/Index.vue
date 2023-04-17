@@ -154,11 +154,10 @@
                 :items="list.data"
                 :loading="list.isLoading"
                 :items-per-page="pagination.rows_per_page"
-                :server-items-length="Math.ceil(pagination.total_items/pagination.rows_per_page)"
+                :server-items-length="pagination.total_items"
                 @update:items-per-page="getItemPerPage"
                 @update:page="getPagination"
-                :footer-props="{'items-per-page-options':[10,15,20,25]}"
-                data-unq="voucher-table-listVoucher"
+                :footer-props="footerProps"
             >
                 <template v-slot:item="props">
                     <tr style="height:48px">
@@ -410,12 +409,21 @@
                 confirm_data: state => state.voucher.voucher_archive.confirm_data,
                 confirm_data_bulky: state => state.voucher.voucher_list.confirm_data,
                 error: state => state.voucher.voucher_list.error,
-                pagination: state => state.voucher.voucher_list.pagination,
+                pagination: state => state.pagination.pagination,
             }),
+            footerProps() {
+                return {
+                    'items-per-page-options':[10,15,20,25],
+                    'page-text': `${(this.pagination.page-1)*this.pagination.rows_per_page+1}
+                                    - ${Math.min(this.pagination.page*this.pagination.rows_per_page,this.pagination.total_items)} 
+                                    of ${this.pagination.total_items}`,
+                };
+            },
         },
         created() {
             this.$store.commit("resetFilter")
             this.fetchVoucherList()
+            this.$store.commit("resetPagination")
         },
         mounted() {
             let self = this
@@ -437,6 +445,7 @@
                 if(d){
                     this.$store.commit("setVoucherTypeFilter", d.value)
                 }
+                this.getPagination(1)
                 this.fetchVoucherList()
             },
             // For Filter by Region
@@ -445,6 +454,7 @@
                 if(d){
                     this.$store.commit("setRegionFilter", d.id)
                 }
+                this.getPagination(1)
                 this.fetchVoucherList()
             },
             // For Filter by Customer
@@ -453,6 +463,7 @@
                 if(d){
                     this.$store.commit("setCustomerFilter", d.id)
                 }
+                this.getPagination(1)
                 this.fetchVoucherList()
             },
             // For Filter by Archetype
@@ -461,6 +472,7 @@
                 if(d){
                     this.$store.commit("setArchetypeFilter", d.id)
                 }
+                this.getPagination(1)
                 this.fetchVoucherList()
             },
             // For Filter by Membership Level
@@ -472,6 +484,7 @@
                 }else{
                     this.disabled_checkpoint = true
                 }
+                this.getPagination(1)
                 this.fetchVoucherList()
             },
             // For Filter by Membership Lapak / Checkpoint
@@ -480,6 +493,7 @@
                 if(d){
                     this.$store.commit("setMembershipLapakFilter", d.id)
                 }
+                this.getPagination(1)
                 this.fetchVoucherList()
             },
             // For download excel template bulk voucher

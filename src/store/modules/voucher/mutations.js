@@ -69,10 +69,6 @@ const mutations = {
         state.voucher_list.isSuccess = payload;
         return state;
     },
-    setPagination: function(state, payload) {
-        state.voucher_list.pagination = payload;
-        return state;
-    },
 
     // Archive Voucher
     setArchiveVoucher: function(state, payload) {
