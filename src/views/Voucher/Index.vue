@@ -187,7 +187,9 @@
                         <td :data-unq="`voucher-value-voucherAmount-${props.index}`" class="right">Rp. {{ formatPrice(props.item.disc_amount) }}</td>
                         <td :data-unq="`voucher-value-overallQuota-${props.index}`" class="center">{{ props.item.overall_quota }}/{{ props.item.rem_overall_quota }}</td>
                         <td :data-unq="`voucher-value-region-${props.index}`">{{ props.item.region.description }}</td>
-                        <td :data-unq="`voucher-value-archetype-${props.index}`">{{ props.item.archetype.description }}</td>
+                        <td :data-unq="`voucher-value-archetype-${props.index}`">{{ props.item.archetype.description }}<br>
+                            <span class="second-color">{{ props.item.archetype.customer_type.description }}</span>
+                        </td>
                         <td :data-unq="`voucher-value-status-${props.index}`">
                             <div v-if="props.item.status === 1">
                                 <v-chip

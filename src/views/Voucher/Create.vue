@@ -62,7 +62,16 @@
                             :dense="true"
                             :error="error.region_id"
                             :data-unq="`voucher-select-region`"
+                            :disabled="check_box.region"
+                            :clear="check_box.region"
                         ></SelectArea>
+                        <div class="w160 -mt25">
+                            <v-checkbox
+                                label="Select All Region"
+                                v-model="check_box.region"
+                                @click="checkBoxArea(check_box.region)"
+                            ></v-checkbox>
+                        </div>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectBusinessType
@@ -71,18 +80,36 @@
                             :dense="true"
                             :error="error.customer_type_id"
                             :data-unq="`voucher-select-customerType`"
+                            :disabled="check_box.customer_type"
+                            :clear="check_box.customer_type"
                         ></SelectBusinessType>
+                        <div class="w160 -mt25">
+                            <v-checkbox
+                                label="Select All Customer Type"
+                                v-model="check_box.customer_type"
+                                @click="checkBoxCustomerType(check_box.customer_type)"
+                            ></v-checkbox>
+                        </div>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectArchetype
                             @selected="archetypeSelected"
                             name="archetype"
-                            :disabled="disabled_archetype"
+                            :disabled="disabled_archetype || check_box.archetype"
                             :customer_type_id="form.customer_type_id"
                             :dense="true"
                             :error="error.archetype_id"
                             :data-unq="`voucher-select-archetype`"
+                            :clear="check_box.archetype"
                         ></SelectArchetype>
+                        <div class="w160 -mt25" v-if="disabled_archetype === false || check_box.customer_type === true">
+                            <v-checkbox
+                                :disabled="check_box.customer_type"
+                                label="Select All Archetype"
+                                v-model="check_box.archetype"
+                                @click="checkBoxArchetype(check_box.archetype)"
+                            ></v-checkbox>
+                        </div>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectCustomer
@@ -562,6 +589,7 @@
                 date: state => state.voucher.voucher_create.date,
                 table_headers: state => state.voucher.voucher_create.table_headers,
                 error: state => state.voucher.voucher_create.error,
+                check_box: state => state.voucher.voucher_create.disabled,
             }),
             // Check and save current time
             timeNow() {
@@ -749,6 +777,32 @@
                     if (key == 'item_id' + idx) {
                         return this.error[key]
                     }
+                }
+            },
+            // For checked check box area
+            checkBoxArea(d) {
+                if(d === true){
+                    this.$store.commit('setRegionCreate', 'all')
+                }
+            },
+            // For checked check customer type
+            checkBoxCustomerType(d) {
+                if(d === true){
+                    this.$store.commit('setCustomerTypeCreate', 'all')
+                    this.$store.commit('setArchetypeCreate', 'all')
+                    this.$store.commit('setCheckBox',
+                        { ...this.check_box, archetype: true})
+                }else{
+                    this.$store.commit('setArchetypeCreate', null)
+                    this.$store.commit('setCheckBox',
+                        { ...this.check_box, archetype: false})
+                        this.disabled_archetype = true
+                }
+            },
+            // For checked check customer type
+            checkBoxArchetype(d) {
+                if(d === true){
+                    this.$store.commit('setArchetypeCreate', 'all')
                 }
             },
         },

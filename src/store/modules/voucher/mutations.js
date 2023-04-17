@@ -202,6 +202,11 @@ const mutations = {
         };
         return state;
     },
+    setCheckBox: function(state, payload){
+        state.voucher_create.disabled = payload
+    },
+
+    // Bulk Voucher
     responseBulkTrue: function(state, payload) {
         state.voucher_list.dialog_bulky = {
             modal_bulk_voucher: false,
