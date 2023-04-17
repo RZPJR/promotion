@@ -69,10 +69,6 @@ const mutations = {
         state.voucher_list.isSuccess = payload;
         return state;
     },
-    setPagination: function(state, payload) {
-        state.voucher_list.pagination = payload;
-        return state;
-    },
 
     // Archive Voucher
     setArchiveVoucher: function(state, payload) {
@@ -206,6 +202,11 @@ const mutations = {
         };
         return state;
     },
+    setCheckBox: function(state, payload){
+        state.voucher_create.disabled = payload
+    },
+
+    // Bulk Voucher
     responseBulkTrue: function(state, payload) {
         state.voucher_list.dialog_bulky = {
             modal_bulk_voucher: false,

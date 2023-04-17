@@ -1,5 +1,6 @@
 import http from "../../../services/http";
-import Vue from 'vue'
+import Vue from 'vue';
+import Pagination from "../pagination";
 
 const actions = {
     // Readlist Voucher
@@ -8,7 +9,7 @@ const actions = {
         commit("setVoucherList", [])
         try {
             let status = state.voucher_list.filter.status === 999 ? '' : state.voucher_list.filter.status
-            let pagination = state.voucher_list.pagination
+            let pagination = Pagination.state.pagination
             const response = await http.get('/voucher',{params: {
                 page: pagination.page,
                 per_page : pagination.rows_per_page,
@@ -26,7 +27,7 @@ const actions = {
             if(response.data.data && response.data.data !== null){
                 commit("setVoucherList", response.data.data)
                 commit('setPagination', {
-                    ...state.voucher_list.pagination,
+                    ...pagination,
                     total_items: response.data.total !== null ? response.data.total : 0
                 })
             }

@@ -62,7 +62,7 @@ const state = {
 				sortable: false
 			},
 			{
-				text:'Archetype',
+				text:'Archetype/Customer Type',
 				width: "10%",
 				class: 'grey--text text--darken-4',
 				sortable: false
@@ -167,6 +167,11 @@ const state = {
 			image_url: '',
 			membership_level_id: null,
 			membership_checkpoint_id: null,
+		},
+		disabled:{
+			region: false,
+			customer_type: false,
+			archetype: false
 		},
 		table_headers: [
 			{
