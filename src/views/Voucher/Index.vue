@@ -509,6 +509,7 @@
                 file.forEach((item) => {
                     let value = {};
                     value.region_code = item.region_code? String(item.region_code) : null;
+                    value.customer_type_code = item.customer_type_code? String(item.customer_type_code) : null;
                     value.archetype_code = item.archetype_code? String(item.archetype_code) : null;
                     value.customer_code = item.customer_code? String(item.customer_code) : null;
                     value.division_code = item.division_code? String(item.division_code) : null;
