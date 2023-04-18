@@ -630,6 +630,12 @@
             this.$store.commit('resetDateCreate')
             this.$store.commit('setErrorCreate', {})
             this.$store.commit('setErrorImageCreate', '')
+            this.$store.commit('setCheckBox', {
+                ...this.check_box,
+                region: false,
+                customer_type: false,
+                archetype: false
+            })
             
             let self = this
             this.$root.$on('event_error', function (err) {
@@ -786,6 +792,8 @@
             checkBoxArea(d) {
                 if(d === true){
                     this.$store.commit('setRegionCreate', 'all')
+                }else{
+                    this.$store.commit('setRegionCreate', null)
                 }
             },
             // For checked check customer type
@@ -796,6 +804,7 @@
                     this.$store.commit('setCheckBox',
                         { ...this.check_box, archetype: true})
                 }else{
+                    this.$store.commit('setCustomerTypeCreate', null)
                     this.$store.commit('setArchetypeCreate', null)
                     this.$store.commit('setCheckBox',
                         { ...this.check_box, archetype: false})
@@ -806,6 +815,8 @@
             checkBoxArchetype(d) {
                 if(d === true){
                     this.$store.commit('setArchetypeCreate', 'all')
+                }else{
+                    this.$store.commit('setArchetypeCreate', null)
                 }
             },
         },
