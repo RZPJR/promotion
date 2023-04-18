@@ -65,12 +65,12 @@
                             :disabled="check_box.region"
                             :clear="check_box.region"
                         ></SelectArea>
-                        <div class="w160 -mt25">
+                        <div class="-mt25">
                             <v-checkbox
                                 label="Select All Region"
                                 v-model="check_box.region"
                                 @click="checkBoxArea(check_box.region)"
-                                :data-unq="`voucher-checkbox-region"
+                                data-unq="`voucher-checkbox-region"
                             ></v-checkbox>
                         </div>
                     </v-col>
@@ -84,12 +84,12 @@
                             :disabled="check_box.customer_type"
                             :clear="check_box.customer_type"
                         ></SelectBusinessType>
-                        <div class="w160 -mt25">
+                        <div class="-mt25">
                             <v-checkbox
                                 label="Select All Customer Type"
                                 v-model="check_box.customer_type"
                                 @click="checkBoxCustomerType(check_box.customer_type)"
-                                :data-unq="`voucher-checkbox-customerType`"
+                                data-unq="`voucher-checkbox-customerType`"
                             ></v-checkbox>
                         </div>
                     </v-col>
@@ -104,13 +104,13 @@
                             :data-unq="`voucher-select-archetype`"
                             :clear="check_box.archetype"
                         ></SelectArchetype>
-                        <div class="w160 -mt25" v-if="disabled_archetype === false || check_box.customer_type === true">
+                        <div class="-mt25" v-if="disabled_archetype === false || check_box.customer_type === true">
                             <v-checkbox
                                 :disabled="check_box.customer_type"
                                 label="Select All Archetype"
                                 v-model="check_box.archetype"
                                 @click="checkBoxArchetype(check_box.archetype)"
-                                :data-unq="`voucher-checkbox-archetype`"
+                                data-unq="`voucher-checkbox-archetype`"
                             ></v-checkbox>
                         </div>
                     </v-col>
