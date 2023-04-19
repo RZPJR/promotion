@@ -508,7 +508,7 @@
                 let dataBulkVoucher = []
                 file.forEach((item) => {
                     let value = {};
-                    value.region_code = item.region_code? String(item.region_code) : null;
+                    value.region_name = item.region_name? String(item.region_name) : null;
                     value.customer_type_code = item.customer_type_code? String(item.customer_type_code) : null;
                     value.archetype_code = item.archetype_code? String(item.archetype_code) : null;
                     value.customer_code = item.customer_code? String(item.customer_code) : null;
