@@ -3,7 +3,7 @@ import axios from "axios";
 import * as Sentry from "@sentry/vue";
 
 let API_URL = process.env.VUE_APP_API_URL;
-let API_URL_2 = process.env.VUE_APP_API_URL_2;
+let API_URL_2 = process.env.VUE_APP_API_URL_BASE;
 
 const api = axios.create({
   baseURL: API_URL
@@ -26,6 +26,16 @@ const HTTP = {
   init() {
     // Intercept the request to make sure the token is injected into the header.
     api.interceptors.request.use(config => {
+      const token = localStorage.getItem("bearer");
+      if (token !== "" || token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      } else {
+        window.location.replace("/auth");
+      }
+      return config;
+    });
+
+    api2.interceptors.request.use(config => {
       const token = localStorage.getItem("bearer");
       if (token !== "" || token) {
         config.headers.Authorization = `Bearer ${token}`;
