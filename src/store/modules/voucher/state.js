@@ -173,6 +173,7 @@ const state = {
 			customer_type: false,
 			archetype: false
 		},
+		division:{},
 		table_headers: [
 			{
 				text: 'No.',

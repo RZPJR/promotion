@@ -94,6 +94,24 @@ const actions = {
             commit("responseBulkFalse")
         })
     },
+
+    // Get Division
+    fetchDivision: async ({ state, commit, dispatch }, payload) => {
+        try {
+            const response = await http.get("account/v1/division/default", {
+                params: {
+                    customer_type_id: payload,
+                }
+            }, true);
+            let data = response.data.data
+            if (data){
+                commit("setDivisionObj", data)
+                commit("setDivisionCreate", data.id)
+            }
+        }catch (error) {
+            console.log(error);
+        }
+    },
 }
 
 export default actions;
