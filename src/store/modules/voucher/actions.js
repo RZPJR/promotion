@@ -95,7 +95,7 @@ const actions = {
         })
     },
 
-    // Get Division
+    // Get Division base on customer type
     fetchDivision: async ({ state, commit, dispatch }, payload) => {
         try {
             const response = await http.get("account/v1/division/default", {
