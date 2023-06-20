@@ -117,15 +117,20 @@
                         ></SelectCustomer>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
-                        <SelectDivision
-                            @selected="divisionSelected"
+                        <v-text-field
                             name="division"
-                            :dense="true"
+                            v-model="division_model"
+                            required
+                            outlined
+                            dense
+                            :disabled="true"
                             :error="error.division_id"
                             :data-unq="`voucher-select-division`"
-                            :disabled="true"
-                            :division="divison"
-                        ></SelectDivision>
+                        >
+                            <template v-slot:label>
+                                Division<span style="color:red">*</span>
+                            </template>
+                        </v-text-field>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <v-card elevation="0" outlined>
@@ -589,6 +594,13 @@
                 error: state => state.voucher.voucher_create.error,
                 check_box: state => state.voucher.voucher_create.disabled,
             }),
+            // For model division
+            division_model() {
+                if (this.divison.name === undefined) {
+                    return ''
+                }
+                return this.divison.name+' - '+this.divison.name
+            },
             // Check and save current time
             timeNow() {
                 const d = new Date();

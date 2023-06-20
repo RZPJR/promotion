@@ -105,9 +105,7 @@ const actions = {
             }, true);
             let data = response.data.data
             if (data){
-                if (data.id != 0){
-                    commit("setDivisionObj", data)
-                }
+                commit("setDivisionObj", data)
                 commit("setDivisionCreate", data.id)
             }
         }catch (error) {
