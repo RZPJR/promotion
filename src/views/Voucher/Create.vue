@@ -691,9 +691,8 @@
                 if (d) {
                     this.$store.commit('setCustomerTypeCreate', d.id)
                     this.disabled_archetype = false
-                    if (d.id != 0) {
-                        this.fetchDivision(d?.id)
-                    }
+                    this.fetchDivision(d?.id)
+
                 }else{
                     this.disabled_archetype = true
                 }
