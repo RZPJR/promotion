@@ -115,6 +115,10 @@ const mutations = {
         state.voucher_create.form.division_id = payload;
         return state;
     },
+    setDivisionObj: function(state, payload) {
+        state.voucher_create.division = payload;
+        return state;
+    },
     setMembershipLevelCreate: function(state, payload) {
         state.voucher_create.form.membership_level_id = payload;
         return state;

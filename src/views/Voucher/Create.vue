@@ -84,14 +84,6 @@
                             :disabled="check_box.customer_type"
                             :clear="check_box.customer_type"
                         ></SelectBusinessType>
-                        <div class="-mt25">
-                            <v-checkbox
-                                label="Select All Customer Type"
-                                v-model="check_box.customer_type"
-                                @click="checkBoxCustomerType(check_box.customer_type)"
-                                data-unq="`voucher-checkbox-customerType`"
-                            ></v-checkbox>
-                        </div>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <SelectArchetype
@@ -125,13 +117,20 @@
                         ></SelectCustomer>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
-                        <SelectDivision
-                            @selected="divisionSelected"
+                        <v-text-field
                             name="division"
-                            :dense="true"
+                            v-model="division_model"
+                            required
+                            outlined
+                            dense
+                            :disabled="true"
                             :error="error.division_id"
                             :data-unq="`voucher-select-division`"
-                        ></SelectDivision>
+                        >
+                            <template v-slot:label>
+                                Division<span style="color:red">*</span>
+                            </template>
+                        </v-text-field>
                     </v-col>
                     <v-col cols="12" md="6" class="-mt24">
                         <v-card elevation="0" outlined>
@@ -590,10 +589,18 @@
             ...mapState({
                 form: state => state.voucher.voucher_create.form,
                 date: state => state.voucher.voucher_create.date,
+                divison: state => state.voucher.voucher_create.division,
                 table_headers: state => state.voucher.voucher_create.table_headers,
                 error: state => state.voucher.voucher_create.error,
                 check_box: state => state.voucher.voucher_create.disabled,
             }),
+            // For model division
+            division_model() {
+                if (this.divison.name === undefined) {
+                    return ''
+                }
+                return this.divison.name+' - '+this.divison.name
+            },
             // Check and save current time
             timeNow() {
                 const d = new Date();
@@ -652,6 +659,9 @@
             });
         },
         methods: {
+            ...mapActions([
+                "fetchDivision"
+            ]),
             setCreateVoucher(){
                 this.$store.commit('setStartTimeCreate', null)
                 if (this.date.start_date.input && this.date.start_time.input) {
@@ -693,6 +703,8 @@
                 if (d) {
                     this.$store.commit('setCustomerTypeCreate', d.id)
                     this.disabled_archetype = false
+                    this.fetchDivision(d?.id)
+
                 }else{
                     this.disabled_archetype = true
                 }
@@ -794,21 +806,6 @@
                     this.$store.commit('setRegionCreate', 'all')
                 }else{
                     this.$store.commit('setRegionCreate', null)
-                }
-            },
-            // For checked check customer type
-            checkBoxCustomerType(d) {
-                if(d === true){
-                    this.$store.commit('setCustomerTypeCreate', 'all')
-                    this.$store.commit('setArchetypeCreate', 'all')
-                    this.$store.commit('setCheckBox',
-                        { ...this.check_box, archetype: true})
-                }else{
-                    this.$store.commit('setCustomerTypeCreate', null)
-                    this.$store.commit('setArchetypeCreate', null)
-                    this.$store.commit('setCheckBox',
-                        { ...this.check_box, archetype: false})
-                        this.disabled_archetype = true
                 }
             },
             // For checked check customer type
