@@ -512,7 +512,6 @@
                     value.customer_type_code = item.customer_type_code? String(item.customer_type_code) : null;
                     value.archetype_code = item.archetype_code? String(item.archetype_code) : null;
                     value.customer_code = item.customer_code? String(item.customer_code) : null;
-                    value.division_code = item.division_code? String(item.division_code) : null;
                     value.redeem_code = item.redeem_code? String(item.redeem_code) : null;
                     value.voucher_name = item.voucher_name? String(item.voucher_name) : null;
                     value.voucher_type = parseInt(item.voucher_type);
